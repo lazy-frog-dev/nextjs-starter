@@ -1,0 +1,9 @@
+# This project is its own pnpm workspace. New dependency versions must be a week old before they
+# install, which keeps freshly published (possibly compromised) releases out. Next.js is exempt so a
+# security fix can land the day it ships: take a new Next.js early only for a security release.
+minimumReleaseAge: 10080
+minimumReleaseAgeExclude:
+  - next
+  - "@next/*"
+# `pnpm add` pins the exact version, as the guide asks.
+saveExact: true

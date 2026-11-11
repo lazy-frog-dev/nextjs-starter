@@ -1,0 +1,191 @@
+/* Starter: a plain stand-in so the template's components render before the project has a look.
+   `look apply` (LazyFrog plan › Look) replaces this file with the project's own look.
+   Use these variables rather than fixed values, so a change of look is one change. System fonts: nothing to load.
+   Optional: class="lf-base" on <html> or <body> styles text, headings, links, buttons (.button,
+   .button-secondary), inputs, focus and selection from these tokens; the site's own CSS wins.
+   Add class="lf-ui" too in an app: paragraphs and list items then take their box's width (cards,
+   lists, forms), and only prose (<article>, .prose) keeps the reading measure.
+   Tailwind 4: make the first line of app/globals.css
+     @layer theme, base, lf-base, components, utilities;
+   before Tailwind's own import, or the base styles sit below its reset and lose to it. */
+
+:root {
+  --color-background: #ffffff;
+  --color-surface: #f5f5f4;
+  --color-text: #1c1917;
+  --color-muted: #57534e;
+  --color-primary: #2b4c7e;
+  --color-accent: #a14a12;
+  /* Derived for legibility: labels on primary, links, input borders, dividers, focus, selection. */
+  --color-on-primary: #ffffff;
+  --color-link: #2b4c7e;
+  --color-border: #928f8c;
+  --color-line: #dad9d8;
+  --color-focus: #2b4c7e;
+  --color-selection: #bfc9d8;
+  /* Status, for an app's messages and badges: legible as text on background and surface. */
+  --color-success: #1f7037;
+  --color-warning: #9a5a00;
+  --color-danger: #c0261b;
+  --font-heading: ui-sans-serif, system-ui, sans-serif;
+  --font-body: ui-sans-serif, system-ui, sans-serif;
+  --heading-weight: 600;
+  --heading-style: normal;
+  --heading-tracking: 0;
+  --heading-leading: 1.15;
+  --leading: 1.6;
+  /* Type scale (classic): step 0 is body text, 5 the largest heading; fluid from phone to desktop. */
+  --step--1: clamp(0.8333rem, 0.8072rem + 0.1159vw, 0.9rem);
+  --step-0: clamp(1rem, 0.9511rem + 0.2174vw, 1.125rem);
+  --step-1: clamp(1.2rem, 1.1193rem + 0.3587vw, 1.4063rem);
+  --step-2: clamp(1.44rem, 1.3156rem + 0.5527vw, 1.7578rem);
+  --step-3: clamp(1.728rem, 1.5444rem + 0.8161vw, 2.1973rem);
+  --step-4: clamp(2.0736rem, 1.8103rem + 1.1704vw, 2.7466rem);
+  --step-5: clamp(2.4883rem, 2.1186rem + 1.6433vw, 3.4332rem);
+  --space-scale: 1;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4.5rem;
+  --section-space: clamp(3rem, 1.8261rem + 5.2174vw, 6rem);
+  --measure: 68ch;
+  --container: 72rem;
+  --gutter: clamp(1rem, 4vw, 2.5rem);
+  --radius: 10px;
+  --shadow-1: 0 1px 2px rgb(28 25 23 / 0.06), 0 1px 3px rgb(28 25 23 / 0.1);
+  --shadow-2: 0 4px 8px -2px rgb(28 25 23 / 0.08), 0 14px 28px -6px rgb(28 25 23 / 0.14);
+  --motion-duration: 180ms;
+  --motion-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-duration: 0ms;
+  }
+}
+
+@layer lf-base {
+  :where(.lf-base) {
+    background: var(--color-background);
+    color: var(--color-text);
+    font-family: var(--font-body);
+    font-size: var(--step-0);
+    line-height: var(--leading);
+    text-size-adjust: 100%;
+  }
+  :where(.lf-base) :where(h1, h2, h3, h4, h5, h6) {
+    font-family: var(--font-heading);
+    font-weight: var(--heading-weight);
+    font-style: var(--heading-style);
+    letter-spacing: var(--heading-tracking);
+    line-height: var(--heading-leading);
+    text-wrap: balance;
+    margin: 0 0 var(--space-4);
+  }
+  :where(.lf-base) h1 {
+    font-size: var(--step-5);
+  }
+  :where(.lf-base) h2 {
+    font-size: var(--step-4);
+  }
+  :where(.lf-base) h3 {
+    font-size: var(--step-3);
+  }
+  :where(.lf-base) h4 {
+    font-size: var(--step-2);
+  }
+  :where(.lf-base) :where(h5, h6) {
+    font-size: var(--step-1);
+  }
+  :where(.lf-base) :where(p, li, blockquote) {
+    text-wrap: pretty;
+  }
+  /* The reading measure: everywhere on a site, only in prose inside an app's UI (.lf-ui). */
+  :where(.lf-base) :where(p, li, blockquote):where(:not(.lf-ui *)),
+  :where(.lf-base) :where(article, .prose) :where(p, li, blockquote) {
+    max-width: var(--measure);
+  }
+  :where(.lf-base) p {
+    margin: 0 0 var(--space-4);
+  }
+  :where(.lf-base) small {
+    font-size: var(--step--1);
+  }
+  :where(.lf-base) :where(img, video, svg) {
+    max-width: 100%;
+    height: auto;
+  }
+  /* Links that are buttons take the button's colours (round 35: a link's colour on a link styled as
+     a button hid its label, button colour on button colour). */
+  :where(.lf-base) a:where(:not(.button, .button-secondary)) {
+    color: var(--color-link);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+    transition: text-decoration-thickness var(--motion-duration) var(--motion-ease);
+  }
+  :where(.lf-base) a:where(:not(.button, .button-secondary)):hover {
+    text-decoration-thickness: 2px;
+  }
+  :where(.lf-base) :where(button, .button, .button-secondary, [type="submit"]) {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: 44px;
+    padding: var(--space-2) var(--space-5);
+    border: 1px solid var(--color-primary);
+    border-radius: var(--radius);
+    background: var(--color-primary);
+    color: var(--color-on-primary);
+    font: inherit;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+      filter var(--motion-duration) var(--motion-ease),
+      transform var(--motion-duration) var(--motion-ease);
+  }
+  :where(.lf-base) :where(button, .button, .button-secondary, [type="submit"]):hover {
+    filter: brightness(1.08);
+  }
+  :where(.lf-base) :where(button, .button, .button-secondary, [type="submit"]):active {
+    transform: translateY(1px);
+  }
+  :where(.lf-base) .button-secondary {
+    background: transparent;
+    color: var(--color-text);
+    border-color: var(--color-border);
+  }
+  :where(.lf-base) label {
+    font-weight: 600;
+  }
+  :where(.lf-base)
+    :where(input:not([type="checkbox"], [type="radio"], [type="submit"]), select, textarea) {
+    width: 100%;
+    min-height: 44px;
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--color-border);
+    border-radius: min(var(--radius), 12px);
+    background: var(--color-background);
+    color: var(--color-text);
+    font: inherit;
+  }
+  :where(.lf-base) ::placeholder {
+    color: var(--color-muted);
+    opacity: 1;
+  }
+  :where(.lf-base) :focus-visible {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 2px;
+  }
+  :where(.lf-base) ::selection {
+    background: var(--color-selection);
+    color: var(--color-text);
+  }
+  :where(.lf-base) hr {
+    border: 0;
+    border-top: 1px solid var(--color-line);
+  }
+}

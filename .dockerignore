@@ -1,0 +1,9 @@
+# Kept out of the image: secrets, git history and what the build makes again.
+.env
+.env.*
+!.env.example
+.git
+node_modules
+.next
+.venv
+__pycache__

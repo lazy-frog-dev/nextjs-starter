@@ -1,0 +1,9 @@
+# Platform state (toolchains, caches): never committed.
+.lazyfrog/
+node_modules/
+.next/
+next-env.d.ts
+*.tsbuildinfo
+.env
+.env.*
+!.env.example

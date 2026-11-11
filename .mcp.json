@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "lazyfrog": {
+      "type": "http",
+      "url": "https://mcp.lazyfrog.dev/mcp"
+    }
+  }
+}

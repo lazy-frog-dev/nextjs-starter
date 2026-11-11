@@ -1,0 +1,32 @@
+# `docker compose up` runs this project outside LazyFrog with its own PostgreSQL.
+services:
+  web:
+    build: .
+    ports: ["3000:3000"]
+    # The secrets SECRETS.md names, in a .env beside this file (it isn't copied into the image).
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      DATABASE_URL: postgres://app:app@db:5432/app
+    depends_on:
+      db:
+        condition: service_healthy
+  db:
+    # postgres:19 once PostgreSQL 19 is GA (2026-10-29); the RC until then.
+    image: postgres:19rc1
+    environment:
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: app
+      POSTGRES_DB: app
+    volumes:
+      # PostgreSQL 18+ images keep data under /var/lib/postgresql/<major>/docker.
+      - db:/var/lib/postgresql
+      - ./migrations:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U app -d app"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+volumes:
+  db:
