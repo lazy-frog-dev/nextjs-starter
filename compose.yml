@@ -3,7 +3,8 @@ services:
   web:
     build: .
     ports: ["3000:3000"]
-    # The secrets SECRETS.md names, in a .env beside this file (it isn't copied into the image).
+    # The secrets the app needs, in a .env beside this file (it isn't copied into the image):
+    # .env.example lists their names, and an export's SECRETS.md too.
     env_file:
       - path: .env
         required: false
@@ -13,7 +14,8 @@ services:
       db:
         condition: service_healthy
   db:
-    # postgres:19 once PostgreSQL 19 is GA (2026-10-29); the RC until then.
+    # PostgreSQL 19, the version LazyFrog runs: its release candidate until Docker Hub publishes
+    # postgres:19.
     image: postgres:19rc1
     environment:
       POSTGRES_USER: app
