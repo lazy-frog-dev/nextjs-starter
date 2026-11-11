@@ -55,7 +55,7 @@ This project runs on LazyFrog. Read this before changing anything.
   guide's custom-domains example. A shared sign-in sets its cookie's
   `Domain` to `SITE_COOKIE_DOMAIN`, only on hosts under it. `req.url` is `0.0.0.0` in production:
   build absolute URLs from `Host` or `SITE_URL`. Test before DNS with a `Host` header
-  (`http_request` `headers: {host}`).
+  (`http_get` `headers: {host}`).
 
 ## Polish in this app
 
